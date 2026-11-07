@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Diwali, light the rocket</title>
+<meta property="og:title" content="Happy Diwali! A rocket is waiting for you">
+<meta property="og:description" content="Tap the rocket and watch it burst in the sky.">
+<meta name="theme-color" content="#0e0b22">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Mukta:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0e0b22;--ink:#fff4dc;--gold:#f5a623;--rose:#e86aa5;--soft:#b9b0d6}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden}
+body{background:var(--bg);color:var(--ink);font-family:Mukta,system-ui,sans-serif;font-size:18px;
+ background-image:radial-gradient(1.5px 1.5px at 12% 18%,#fff8 50%,transparent),radial-gradient(1px 1px at 78% 12%,#fff7 50%,transparent),radial-gradient(1.5px 1.5px at 40% 8%,#fff6 50%,transparent),radial-gradient(1px 1px at 90% 40%,#fff6 50%,transparent),radial-gradient(1px 1px at 8% 55%,#fff6 50%,transparent),radial-gradient(1.5px 1.5px at 60% 30%,#fff5 50%,transparent),radial-gradient(1px 1px at 30% 45%,#fff5 50%,transparent),radial-gradient(1px 1px at 70% 60%,#fff4 50%,transparent)}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
+.ground{position:fixed;left:0;right:0;bottom:0;height:calc(54px + env(safe-area-inset-bottom));background:linear-gradient(#1b1438,#0a0818);border-top:1px solid #f5a62333}
+#greet{position:fixed;top:16vh;left:0;right:0;text-align:center;padding:0 1rem;opacity:0;transform:translateY(10px);transition:opacity 1s,transform 1s;pointer-events:none}
+#greet.show{opacity:1;transform:none}
+.deva{font-family:"Tiro Devanagari Hindi",serif;font-size:clamp(2.4rem,10vw,4rem);color:var(--gold);line-height:1.15;text-shadow:0 0 24px #f5a62366}
+.en{font-family:"Tiro Devanagari Hindi",Georgia,serif;font-size:clamp(1.3rem,5vw,1.9rem);overflow-wrap:anywhere}
+#hint{position:fixed;left:0;right:0;bottom:calc(240px + env(safe-area-inset-bottom));text-align:center;color:var(--soft);margin:0;transition:opacity .4s}
+#hint.off{opacity:0}
+#rk{position:fixed;left:50%;bottom:calc(30px + env(safe-area-inset-bottom));width:64px;margin-left:-32px;background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity .6s}
+#rk svg{width:100%;height:auto;display:block;overflow:visible}
+#rk.gone{opacity:0;pointer-events:none}
+#rk:focus-visible,#snd:focus-visible{outline:3px solid var(--gold);outline-offset:4px;border-radius:8px}
+.tip{transform-origin:30px 70px;animation:tip 1.6s ease-in-out infinite}
+@keyframes tip{50%{opacity:.35}}
+#rk.fuse .tip{animation:none;opacity:1;transform:scale(2.2)}
+#rk.fuse svg{animation:shake .12s linear infinite}
+@keyframes shake{0%{transform:translateX(-1px)}50%{transform:translateX(1px)}}
+#snd,#make{position:fixed;top:calc(12px + env(safe-area-inset-top));right:12px;font:600 .9rem Mukta,sans-serif;color:var(--ink);background:#1a143899;border:1px solid #f5a62366;border-radius:999px;padding:.35rem .9rem;cursor:pointer}
+#greet{top:11vh;text-shadow:0 2px 14px #0e0b22}
+.dear,.msg,.from{max-width:30rem;margin:.35rem auto}
+.dear{color:var(--soft)}
+.msg{font-size:1.1rem;overflow-wrap:anywhere}
+.from{color:var(--rose)}
+#make{right:auto;left:12px}
+#make:focus-visible,.dbtn:focus-visible,input:focus-visible,textarea:focus-visible,.close:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:8px}
+dialog{width:min(26rem,92vw);max-height:92vh;overflow:auto;background:#1a1438;color:var(--ink);border:1px solid #f5a62366;border-radius:18px;padding:1.4rem}
+dialog::backdrop{background:#05030fcc}
+dialog h2{font-family:"Tiro Devanagari Hindi",Georgia,serif;font-weight:400;font-size:1.5rem;margin:0}
+.dp{color:var(--soft);margin:.3rem 0 1rem}
+label{display:block;text-align:left;font-size:.95rem;margin:.7rem 0 .25rem}
+input,textarea{width:100%;font:inherit;color:var(--ink);background:#0e0b22;border:1px solid #5b4f8f;border-radius:10px;padding:.6rem .7rem}
+textarea{min-height:5.5rem;resize:vertical}
+.link{font-size:.85rem;word-break:break-all;background:#0e0b22;border-radius:10px;padding:.6rem .7rem;color:var(--gold);text-align:left}
+.close{float:right;background:none;border:0;color:var(--ink);font-size:1.6rem;cursor:pointer;line-height:1}
+.dacts{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin-top:1.1rem}
+.dbtn{font:600 1rem Mukta,sans-serif;padding:.65rem 1.2rem;border-radius:999px;border:1.5px solid var(--gold);background:transparent;color:var(--ink);cursor:pointer}
+.dbtn.main{background:var(--gold);color:#1b1230}
+.toast{min-height:1.4rem;color:var(--gold);font-size:.9rem;margin:.6rem 0 0;text-align:center}
+@media (prefers-reduced-motion:reduce){.tip,#rk.fuse svg{animation:none!important}}
+</style>
+</head>
+<body>
+<canvas id="fx" aria-hidden="true"></canvas>
+<button id="snd" type="button" aria-pressed="true">Sound on</button>
+<div id="greet" aria-live="polite">
+  <div class="deva">शुभ दीपावली</div>
+  <div class="en">Happy Diwali</div>
+  <p class="dear">Dear <span id="to">friend</span>,</p>
+  <p class="msg" id="msg"></p>
+  <p class="from" id="fromLine">With love, <span id="from"></span></p>
+</div>
+<button id="make" type="button">Send your own wish</button>
+<dialog id="dlg">
+  <button class="close" id="x" type="button" aria-label="Close">×</button>
+  <h2>Make a Diwali wish</h2>
+  <p class="dp">Add a name, then share the link. They will see their own wish.</p>
+  <label for="fTo">Their name</label><input id="fTo" maxlength="40" autocomplete="off">
+  <label for="fFrom">Your name</label><input id="fFrom" maxlength="40" autocomplete="off">
+  <label for="fMsg">Your message</label><textarea id="fMsg" maxlength="240"></textarea>
+  <label>Your link</label><div class="link" id="out"></div>
+  <div class="dacts">
+    <button class="dbtn main" id="copy" type="button">Copy link</button>
+    <button class="dbtn" id="wa" type="button">Share on WhatsApp</button>
+    <button class="dbtn" id="prev" type="button">Preview</button>
+  </div>
+  <p class="toast" id="toast" role="status"></p>
+</dialog>
+<p id="hint">Tap the rocket to light it</p>
+<div class="ground"></div>
+<button id="rk" type="button" aria-label="Light the rocket">
+  <svg viewBox="0 0 60 170" aria-hidden="true">
+    <defs>
+      <radialGradient id="sp"><stop offset="0" stop-color="#fff6c2"/><stop offset=".5" stop-color="#ffb52e"/><stop offset="1" stop-color="#ff7a1a" stop-opacity="0"/></radialGradient>
+      <linearGradient id="bd" x1="0" x2="1"><stop offset="0" stop-color="#b3204f"/><stop offset=".5" stop-color="#e86aa5"/><stop offset="1" stop-color="#8e1840"/></linearGradient>
+    </defs>
+    <rect x="28.5" y="68" width="3" height="100" fill="#c9a26b"/>
+    <path d="M19 28L30 2L41 28Z" fill="#f5a623"/>
+    <rect x="19" y="28" width="22" height="42" rx="3" fill="url(#bd)"/>
+    <rect x="19" y="38" width="22" height="5" fill="#f5a623"/>
+    <rect x="19" y="56" width="22" height="5" fill="#f5a623"/>
+    <circle class="tip" cx="30" cy="74" r="7" fill="url(#sp)"/>
+  </svg>
+</button>
+
+<script>
+const $=id=>document.getElementById(id);
+const DEF="🪔✨ Happy Diwali! Wishing you and your family a bright, joyful Diwali ✨🪔";
+const q=new URLSearchParams(location.search);
+const toName=(q.get("to")||"").trim().slice(0,40)||"friend";
+const fromName=(q.get("from")||"").trim().slice(0,40);
+const message=(q.get("msg")||"").trim().slice(0,240)||DEF;
+// textContent (not innerHTML) keeps injected HTML out of the page
+$("to").textContent=toName;$("msg").textContent=message;
+if(fromName)$("from").textContent=fromName;else $("fromLine").style.display="none";
+
+/* sound */
+let AC,snd=true;
+function ac(){try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended")AC.resume()}catch(e){}return AC}
+function boom(){const a=ac();if(!a||!snd)return;
+  const len=a.sampleRate*.7,b=a.createBuffer(1,len,a.sampleRate),d=b.getChannelData(0);
+  for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,3);
+  const s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();
+  s.buffer=b;f.type="lowpass";f.frequency.value=900;g.gain.value=.3;
+  s.connect(f);f.connect(g);g.connect(a.destination);s.start()}
+function whistle(){const a=ac();if(!a||!snd)return;
+  const o=a.createOscillator(),g=a.createGain(),t=a.currentTime;
+  o.frequency.setValueAtTime(500,t);o.frequency.exponentialRampToValueAtTime(1800,t+1.1);
+  g.gain.setValueAtTime(.05,t);g.gain.exponentialRampToValueAtTime(.001,t+1.15);
+  o.connect(g);g.connect(a.destination);o.start();o.stop(t+1.2)}
+$("snd").addEventListener("click",()=>{snd=!snd;$("snd").textContent=snd?"Sound on":"Sound off";$("snd").setAttribute("aria-pressed",snd)});
+
+/* canvas */
+const cv=$("fx"),cx=cv.getContext("2d");let W,H,dpr=1,parts=[],rockets=[],on=false;
+function size(){dpr=window.devicePixelRatio||1;W=cv.width=innerWidth*dpr;H=cv.height=innerHeight*dpr}
+addEventListener("resize",size);size();
+const pal=[["#ffd98a","#f5a623"],["#ff6b6b","#ffb3b3"],["#e86aa5","#ffd0e6"],["#9ad1ff","#e3f3ff"],["#8dffb0","#e6ffee"],["#c79bff","#f0e3ff"]];
+function burst(x,y){
+  const [c1,c2]=pal[Math.random()*pal.length|0],n=Math.random()<.5?90:70,ring=Math.random()<.4;
+  for(let i=0;i<n;i++){
+    const a=Math.PI*2*i/n+Math.random()*.05,s=(ring?5:(2+Math.random()*4.2))*dpr;
+    parts.push({x,y,px:x,py:y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,c:i%3?c1:c2,l:1,d:.008+Math.random()*.008,w:2})}
+  for(let i=0;i<24;i++){            // slow gold glitter that hangs and falls
+    const a=Math.random()*Math.PI*2,s=Math.random()*2.2*dpr;
+    parts.push({x,y,px:x,py:y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,c:"#ffe9a8",l:1,d:.006+Math.random()*.005,w:1.2})}
+  loop()}
+function shot(x,y){burst(x,y);boom()}
+function fly(x0,y0,ty,done){rockets.push({x0,y0,ty,t0:performance.now(),dur:1100,done});loop()}
+function loop(){if(on)return;on=true;requestAnimationFrame(frame)}
+function frame(now){
+  cx.globalCompositeOperation="destination-out";cx.globalAlpha=1;cx.fillStyle="rgba(0,0,0,.2)";cx.fillRect(0,0,W,H);
+  cx.globalCompositeOperation="lighter";cx.lineCap="round";
+  for(const r of rockets){
+    const t=(now-r.t0)/r.dur;
+    if(t>=1){r.dead=true;r.done(r.x,r.y);continue}
+    const e=1-(1-t)*(1-t);
+    r.y=r.y0+(r.ty-r.y0)*e;r.x=r.x0+Math.sin(t*14)*6*dpr*t;
+    for(let i=0;i<3;i++)parts.push({x:r.x,y:r.y+6*dpr,px:r.x,py:r.y+6*dpr,vx:(Math.random()-.5)*.8*dpr,vy:(1+Math.random())*dpr,c:"#ffb52e",l:.7,d:.05,w:1.6});
+    cx.globalAlpha=1;cx.fillStyle="#fff6c2";cx.beginPath();cx.arc(r.x,r.y,3*dpr,0,7);cx.fill()}
+  rockets=rockets.filter(r=>!r.dead);
+  for(const p of parts){
+    p.px=p.x;p.py=p.y;p.vx*=.985;p.vy=p.vy*.985+.045*dpr;p.x+=p.vx;p.y+=p.vy;p.l-=p.d;
+    cx.globalAlpha=Math.max(p.l,0);cx.strokeStyle=p.c;cx.lineWidth=p.w*dpr;
+    cx.beginPath();cx.moveTo(p.px,p.py);cx.lineTo(p.x,p.y);cx.stroke()}
+  parts=parts.filter(p=>p.l>0);
+  if(parts.length||rockets.length)requestAnimationFrame(frame);
+  else{on=false;cx.globalCompositeOperation="source-over";cx.clearRect(0,0,W,H)}}
+
+/* the rocket */
+let busy=false;
+$("rk").addEventListener("click",()=>{
+  if(busy)return;busy=true;ac();
+  $("hint").classList.add("off");$("greet").classList.remove("show");
+  $("rk").classList.add("fuse");
+  setTimeout(()=>{
+    const r=$("rk").getBoundingClientRect();
+    $("rk").classList.add("gone");whistle();
+    fly((r.left+r.width/2)*dpr,(r.top+16)*dpr,H*(.2+Math.random()*.1),(x,y)=>{
+      shot(x,y);
+      const n=4+(Math.random()<.5?1:0);               // 4 or 5 bursts in total
+      for(let k=1;k<n;k++)setTimeout(()=>shot(W*(.15+Math.random()*.7),H*(.1+Math.random()*.3)),k*450+Math.random()*150);
+      setTimeout(()=>{
+        $("greet").classList.add("show");
+        $("hint").textContent="Tap the rocket again";$("hint").classList.remove("off");
+        $("rk").classList.remove("gone","fuse");busy=false;
+      },n*450+1600);
+    });
+  },600);
+});
+
+/* link maker */
+const dlg=$("dlg"),base=location.origin+location.pathname;
+function link(){
+  const p=new URLSearchParams();
+  if($("fTo").value.trim())p.set("to",$("fTo").value.trim());
+  if($("fFrom").value.trim())p.set("from",$("fFrom").value.trim());
+  p.set("msg",$("fMsg").value.trim()||DEF);
+  return base+"?"+p.toString();
+}
+const refresh=()=>{$("out").textContent=link()};
+["fTo","fFrom","fMsg"].forEach(i=>$(i).addEventListener("input",refresh));
+$("make").addEventListener("click",()=>{if(!$("fMsg").value)$("fMsg").value=DEF;refresh();dlg.showModal()});
+$("x").addEventListener("click",()=>dlg.close());
+const note=t=>{$("toast").textContent=t;setTimeout(()=>$("toast").textContent="",2500)};
+$("copy").addEventListener("click",async()=>{
+  try{await navigator.clipboard.writeText(link());note("Link copied")}
+  catch(e){note("Copy failed. Select the link and copy it.")}
+});
+$("wa").addEventListener("click",()=>{
+  const name=$("fTo").value.trim();
+  const text=(name?"Hi "+name+", a ":"A ")+"Diwali wish is waiting for you 🪔\n"+link();
+  window.open("https://wa.me/?text="+encodeURIComponent(text),"_blank","noopener");
+});
+$("prev").addEventListener("click",()=>window.open(link(),"_blank","noopener"));
+</script>
+</body>
+</html>
